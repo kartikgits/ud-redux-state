@@ -22,6 +22,7 @@ function createStore () {
 
     const getState = () => state
 
+    // To listen for state change
     const subscribe = (listener) => {
         listeners.push(listener)
         return () => {
@@ -29,9 +30,16 @@ function createStore () {
         }
     }
 
+    // To update the state
+    const dispatch = (action) => {
+        state = todos(state, action)
+        listeners.forEach((listener) => listener())
+    }
+
     return {
         getState,
-        subscribe
+        subscribe,
+        dispatch,
     }
 }
 
