@@ -1,3 +1,14 @@
+// The reducer function
+// It will be a pure function that takes current state and action
+// It return the new state based on the action
+function todos(state = [], action) {
+    if (action.type === 'ADD_TODO') {
+        return state.concat([action.todo])
+    }
+
+    return state
+}
+
 // The Store
 // The store should have four parts -
 // 1. The state
