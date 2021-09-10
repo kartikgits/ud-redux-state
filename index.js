@@ -1,14 +1,4 @@
-// The reducer function
-// It will be a pure function that takes current state and action
-// It return the new state based on the action
-function todos(state = [], action) {
-    if (action.type === 'ADD_TODO') {
-        return state.concat([action.todo])
-    }
-
-    return state
-}
-
+// THE LIBRARY CODE
 // The Store
 // The store should have four parts -
 // 1. The state
@@ -16,7 +6,7 @@ function todos(state = [], action) {
 // 3. Listen to the changes on the state.
 // 4. Update the state.
 
-function createStore () {
+function createStore (reducer) {
     let state
     let listeners = []
 
@@ -32,7 +22,7 @@ function createStore () {
 
     // To update the state
     const dispatch = (action) => {
-        state = todos(state, action)
+        state = reducer(state, action)
         listeners.forEach((listener) => listener())
     }
 
@@ -43,15 +33,29 @@ function createStore () {
     }
 }
 
-const store = createStore()
+// THE APP CODE
+// The reducer function
+// It will be a pure function that takes current state and action
+// It return the new state based on the action
+function todos(state = [], action) {
+    if (action.type === 'ADD_TODO') {
+        return state.concat([action.todo])
+    }
+
+    return state
+}
+
+const store = createStore(todos)
 
 store.subscribe(() => {
-    console.log('The new state is: ', store.getState())
+    console.log('The new state is: ' + store.getState())
 })
 
-// subscribe returns a function, that can be used to unsubscribe the listener
-const unsubscribe = store.subscribe(() => {
-    console.log('The store changed')
-})
-
-unsubscribe()
+store.dispatch( {
+    type: 'ADD_TODO',
+    todo: {
+        id: 0,
+        name: 'Learn Redux',
+        complete: false
+    }
+} )
