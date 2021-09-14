@@ -1,6 +1,6 @@
 // THE LIBRARY CODE
 // The Store
-// The store should have four parts -
+// The store should have four parts - 
 // 1. The state
 // 2. Get the state.
 // 3. Listen to the changes on the state.
